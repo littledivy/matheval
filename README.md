@@ -7,7 +7,7 @@ Tiny and safe math expression evaluation for Deno.
 - [x] Operators (+, -, *, /)
 - [x] Integers
 - [ ] Floats and Complex numbers
-- [ ] Variables
+- [x] Variables
 - [ ] Functions 
 - [ ] Precedence
 

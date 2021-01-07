@@ -1,7 +1,62 @@
 const numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
+export const alphabets = [
+  "A",
+  "B",
+  "C",
+  "D",
+  "E",
+  "F",
+  "G",
+  "H",
+  "I",
+  "J",
+  "K",
+  "L",
+  "M",
+  "N",
+  "O",
+  "P",
+  "Q",
+  "R",
+  "S",
+  "T",
+  "U",
+  "V",
+  "W",
+  "X",
+  "Y",
+  "Z",
+  "a",
+  "b",
+  "c",
+  "d",
+  "e",
+  "f",
+  "g",
+  "h",
+  "i",
+  "j",
+  "k",
+  "l",
+  "m",
+  "n",
+  "o",
+  "p",
+  "q",
+  "r",
+  "s",
+  "t",
+  "u",
+  "v",
+  "w",
+  "x",
+  "y",
+  "z",
+  "_",
+];
 
-interface Token {
-  type: "number" | "operator" | "unknown";
+export interface Token {
+  type: "number" | "operator" | "unknown" | "ident";
   value: string | number;
 }
 
@@ -48,6 +103,9 @@ export default class Lexer {
       case "+":
       case "*":
       case "-":
+      case "/":
+      case "%":
+      case "^":
         token.type = "operator";
         break;
       case 0:
@@ -56,6 +114,8 @@ export default class Lexer {
       default:
         if (numbers.includes(this.ch.toString())) {
           token = this.consume_number();
+        } else if (alphabets.includes(this.ch.toString())) {
+          token = this.consume_ident();
         }
         break;
     }
@@ -68,6 +128,7 @@ export default class Lexer {
     for (;;) {
       switch (this.ch) {
         case " ":
+        case "\n":
         case "\t":
           this.read_char();
           break;
@@ -76,6 +137,23 @@ export default class Lexer {
       }
     }
   }
+  consume_ident(): Token {
+    let start_pos = this.pos;
+    loop:
+    for (;;) {
+      if (alphabets.includes(this.ch.toString())) {
+        this.read_char();
+      } else {
+        break loop;
+      }
+    }
+
+    let literal = this.input.substring(start_pos, this.pos);
+
+    let tok: Token = { type: "ident", value: literal };
+    return tok;
+  }
+
   consume_number(): Token {
     let start_pos = this.pos;
     loop:
