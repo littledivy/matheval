@@ -159,7 +159,7 @@ export default class Lexer {
     loop:
     for (;;) {
       if (this.ch === 0) break loop;
-      if (numbers.includes(this.ch)) {
+      if (numbers.includes(this.ch) || this.ch == ".") {
         this.read_char();
       } else {
         break loop;

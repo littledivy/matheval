@@ -9,11 +9,6 @@ let ops: { [op: string]: any } = {
   "%": (x: number, y: number) => x % y,
 };
 
-type Stack = {
-  name: string;
-  value: any;
-};
-
 export default function evaluate(input: string): number {
   let lexer = new Lexer(input);
   let tok;
@@ -29,7 +24,7 @@ export default function evaluate(input: string): number {
         curr_op = token_value;
         break;
       case "number":
-        result = ops[curr_op](result, parseInt(token_value));
+        result = ops[curr_op](result, tokenToNumber(tok));
         break;
       case "ident":
         lexer.skip_whitspace();
@@ -40,10 +35,19 @@ export default function evaluate(input: string): number {
           stack.set(token_value, assignment);
         } else if (stack.has(token_value)) {
           let val = stack.get(token_value);
-          result = ops[curr_op](result, parseInt(val!.value.toString()));
+          result = ops[curr_op](result, tokenToNumber(val!));
         }
         break;
     }
   }
   return result;
+}
+
+function tokenToNumber(tok: Token): number {
+  let val = tok.value.toString();
+  if (val.indexOf(".") !== -1) {
+    return parseFloat(val);
+  } else {
+    return parseInt(val);
+  }
 }

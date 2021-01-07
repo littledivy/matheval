@@ -8,3 +8,7 @@ Deno.test("eval test", function () {
   assertEquals(evaluate("102 + 103"), 205);
   assertEquals(evaluate("1 * 1 + 1"), 2);
 });
+Deno.test("floats", function () {
+  assertEquals(evaluate("1.1 + 1.1"), 2.2);
+  assertEquals(evaluate("3.14"), 3.14);
+});
