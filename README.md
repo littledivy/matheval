@@ -5,11 +5,11 @@ Tiny and safe math expression evaluation for Deno.
 ### Features
 
 - [x] Operators (+, -, *, /)
-- [x] Integers
-- [ ] Floats and Complex numbers
+- [x] Integers & Floats
 - [x] Variables
+- [ ] Complex numbers
 - [ ] Functions 
-- [ ] Precedence
+- [ ] Accurate Precedence
 
 ### Usage
 
@@ -17,6 +17,7 @@ Tiny and safe math expression evaluation for Deno.
 import evalutate from "https://deno.land/x/matheval/mod.ts";
 
 evaluate("23 * 3") // 69
+
 ```
 
 ### LICENSE
